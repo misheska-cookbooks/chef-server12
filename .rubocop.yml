@@ -1,0 +1,8 @@
+AllCops:
+  Exclude:
+    - bin/**/*
+    - script/**/*
+    - vendor/**/*
+
+SingleSpaceBeforeFirstArg:
+  Enabled: false

@@ -1,0 +1,25 @@
+<%
+chef_server_ip = ENV['CHEF_SERVER_IP'] ? ENV['CHEF_SERVER_IP'] : '192.168.33.34'
+%>
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: centos65
+    driver:
+      box: box-cutter/centos65
+      box_url: box-cutter/centos65
+      network:
+      - ["private_network", {ip: "<%= chef_server_ip %>"}]
+      customize:
+        memory: 1536
+
+suites:
+  - name: standalone
+    run_list:
+      - recipe[chef-server12::default]
+    attributes:
