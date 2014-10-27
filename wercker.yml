@@ -3,10 +3,10 @@ build:
   steps:
     - script:
         name: run chefspec
-        code: /opt/chefdk/embedded/bin/rspec --color
+        code: rake spec
     - script:
         name: run foodcritic
-        code: foodcritic . --exclude spec
+        code: rake foodcritic
     - script:
         name: run rubocop
-        code: rubocop
+        code: rake rubocop
