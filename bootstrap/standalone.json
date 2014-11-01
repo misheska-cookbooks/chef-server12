@@ -6,9 +6,9 @@
     "backend": {
       "fqdn": "standalone.vagrantup.com",
       "ipaddress": "192.168.33.34" 
-    }
+    },
     "nodes": {
-      "node1.vagrantup.com": "192.168.33.35"
+      "node1.vagrantup.com": "192.168.33.35",
       "node2.vagrantup.com": "192.168.33.36"
     }
   },
