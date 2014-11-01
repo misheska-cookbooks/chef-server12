@@ -60,3 +60,34 @@ unless ENV['CI']
     puts '>>>>> Kitchen gem not loaded, omitting tasks'
   end
 end
+
+unless ENV['CI']
+  namespace :standalone do
+    require 'kitchen'
+
+    @instances = []
+    @config = Kitchen::Config.new
+    @names = %w(node1-centos65 node2-centos65 standalone-centos65)
+    @names.each { |name| @instances << @config.instances.get(name) }
+
+    desc 'login to standalone server'
+    task :login do
+      @config.instances.get('standalone-centos65').login
+    end
+
+    desc 'create standalone cluster'
+    task :create do
+      @instances.each(&:create)
+    end
+
+    desc 'destroy standalone cluster'
+    task :destroy do
+      @instances.each(&:destroy)
+    end
+
+    desc 'converge standalone cluster'
+    task :converge do
+      @instances.each(&:converge)
+    end
+  end
+end

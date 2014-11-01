@@ -1,6 +1,7 @@
 <%
 chef_server_ip = ENV['CHEF_SERVER_IP'] ? ENV['CHEF_SERVER_IP'] : '192.168.33.34'
 chef_node1_ip = ENV['CHEF_NODE1_IP'] ? ENV['CHEF_NODE1_IP'] : '192.168.33.35'
+chef_node2_ip = ENV['CHEF_NODE2_IP'] ? ENV['CHEF_NODE2_IP'] : '192.168.33.36'
 %>
 ---
 driver:
@@ -23,6 +24,7 @@ platforms:
           ipaddress: "<%= chef_server_ip %>"
         nodes:
           node1.vagrantup.com: "<%= chef_node1_ip %>"
+          node2.vagrantup.com: "<%= chef_node2_ip %>"
 
 suites:
   - name: standalone
@@ -49,3 +51,17 @@ suites:
       chef_server12:
         node_fqdn: node1.vagrantup.com
         node_ipaddress: "<%= chef_node1_ip %>"
+
+  - name: node2
+    driver:
+      vm_hostname: node2.vagrantup.com
+      network:
+      - ["private_network", {ip: "<%= chef_node2_ip %>"}]
+      customize:
+        memory: 512
+    run_list:
+      - recipe[chef-server12::node]
+    attributes:
+      chef_server12:
+        node_fqdn: node2.vagrantup.com
+        node_ipaddress: "<%= chef_node2_ip %>"
