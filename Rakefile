@@ -37,31 +37,26 @@ rescue LoadError
   warn '>>>>> foodcritic gem not loaded, omitting tasks'
 end
 
-begin
-  require 'kitchen/rake_tasks'
-  Kitchen::RakeTasks.new
-
-  namespace :test do
-    desc 'Run _all_ the tests. Go get a coffee.'
-    task :complete do
-      Rake::Task['test:quick'].invoke
-      Rake::Task['kitchen:all'].invoke
-    end
-
-    desc 'Run CI tests'
-    task :ci do
-      Rake::Task['test:complete'].invoke
-    end
-  end
-rescue LoadError
-  puts '>>>>> Kitchen gem not loaded, omitting tasks'
-end
-
 task default: 'test:quick'
 namespace :test do
   desc 'Run all the quick tests.'
   task :quick do
     Rake::Task['rubocop'].invoke
     Rake::Task['foodcritic'].invoke
+  end
+end
+
+unless ENV['CI']
+  begin
+    require 'kitchen/rake_tasks'
+    Kitchen::RakeTasks.new
+
+    desc 'Run _all_ the tests. Go get a coffee.'
+    task :complete do
+      Rake::Task['test:quick'].invoke
+      Rake::Task['test:kitchen:all'].invoke
+    end
+  rescue LoadError
+    puts '>>>>> Kitchen gem not loaded, omitting tasks'
   end
 end
