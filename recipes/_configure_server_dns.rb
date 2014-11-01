@@ -10,6 +10,6 @@ template '/etc/hosts' do
   variables(
     chef_server_fqdn: chef_server_fqdn,
     chef_server_hostname: chef_server_hostname,
-    chef_server_ipaddress: chef_server_ipaddress,
+    chef_server_ipaddress: chef_server_ipaddress
   )
 end
