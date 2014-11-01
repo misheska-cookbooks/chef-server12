@@ -2,6 +2,8 @@
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
 <%= @chef_server_ipaddress %> <%= @chef_server_fqdn %>
+<% if node['chef_server12'].attribute?('nodes') -%>
 <% node['chef_server12']['nodes'].each do |fqdn, ipaddress| -%>
 <%= ipaddress %> <%= fqdn %>
-<% end %>
+<% end -%>
+<% end -%>
