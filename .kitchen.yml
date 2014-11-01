@@ -1,5 +1,6 @@
 <%
 chef_server_ip = ENV['CHEF_SERVER_IP'] ? ENV['CHEF_SERVER_IP'] : '192.168.33.34'
+chef_node1_ip = ENV['CHEF_NODE1_IP'] ? ENV['CHEF_NODE1_IP'] : '192.168.33.35'
 %>
 ---
 driver:
@@ -13,13 +14,38 @@ platforms:
     driver:
       box: box-cutter/centos65
       box_url: box-cutter/centos65
+    attributes:
+      chef_server12:
+        topology: 'standalone'
+        api_fqdn: 'standalone.vagrantup.com'
+        backend:
+          fqdn: 'standalone.vagrantup.com'
+          ipaddress: "<%= chef_server_ip %>"
+        nodes:
+          node1.vagrantup.com: "<%= chef_node1_ip %>"
+
+suites:
+  - name: standalone
+    driver:
+      vm_hostname: standalone.vagrantup.com
       network:
       - ["private_network", {ip: "<%= chef_server_ip %>"}]
       customize:
         memory: 1536
-
-suites:
-  - name: standalone
     run_list:
-      - recipe[chef-server12::default]
+      - recipe[chef-server12::standalone]
     attributes:
+
+  - name: node1
+    driver:
+      vm_hostname: node1.vagrantup.com
+      network:
+      - ["private_network", {ip: "<%= chef_node1_ip %>"}]
+      customize:
+        memory: 512
+    run_list:
+      - recipe[chef-server12::node]
+    attributes:
+      chef_server12:
+        node_fqdn: node1.vagrantup.com
+        node_ipaddress: "<%= chef_node1_ip %>"

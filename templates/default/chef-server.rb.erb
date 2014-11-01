@@ -1,0 +1,19 @@
+# This file was created by Chef - manual changes may be overwritten
+
+topology "tier"
+
+server "<%= node['chef_server12']['backend']['fqdn'] %>",
+  :ipaddress => "<%= node['chef_server12']['backend']['ipaddress'] %>",
+  :role => "backend",
+  :bootstrap => true
+
+backend_vip "<%= node['chef_server12']['backend']['fqdn'] %>",
+  :ipaddress => "<%= node['chef_server12']['backend']['ipaddress'] %>"
+
+<% node['chef_server12']['frontends'].each do |fqdn, ipaddress| -%>
+server "<%= fqdn %>",
+  :ipaddress => "<%= ipaddress %>",
+  :role => "frontend"
+
+<% end -%>
+api_fqdn "<%= node['chef_server12']['api_fqdn'] -%>"

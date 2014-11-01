@@ -27,4 +27,7 @@ default['chef_server12']['admin_password'] = 'chefadmin'
 default['chef_server12']['admin_private_key_path'] = '/tmp/chefadmin.pem'
 default['chef_server12']['organization'] = 'default'
 default['chef_server12']['organization_long_name'] = 'Default Organization'
-default['chef_server12']['organization_private_key_path'] = '/tmp/validator.pem'
+default['chef_server12']['organization_private_key'] = \
+   "#{node['chef_server12']['organization']}-validator.pem"
+default['chef_server12']['organization_private_key_path'] = \
+   File.join('/tmp', node['chef_server12']['organization_private_key'])
