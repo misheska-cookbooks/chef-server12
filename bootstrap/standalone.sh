@@ -22,4 +22,4 @@ if [ ! -f "solo.rb" ] ; then
 fi
 
 echo '==> Performing Chef run'
-chef-solo --json-attributes standalone.json --config ./solo.rb
+sudo chef-solo --json-attributes standalone.json --config ./solo.rb
