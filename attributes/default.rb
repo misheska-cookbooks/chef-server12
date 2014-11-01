@@ -16,8 +16,9 @@ default['chef_server12']['feature']['chef-sync'] = false
 default['chef_server12']['feature']['opscode-push-jobs-server'] = false
 
 # Chef Server Parameters
-default['chef-server12']['api_fqdn'] = node['ipaddress']
-default['chef-server12']['topology'] = 'standalone'
+default['chef_server12']['api_fqdn'] = node['ipaddress']
+default['chef_server12']['topology'] = 'standalone'
+default['chef_server12']['write_hosts'] = false
 
 default['chef_server12']['admin_username'] = 'chefadmin'
 default['chef_server12']['admin_firstname'] = 'Chef'

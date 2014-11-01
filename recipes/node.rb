@@ -1,7 +1,8 @@
 # include helper methods
 ::Chef::Recipe.send(:include, DNS::Helper)
 
-include_recipe 'chef-server12::_configure_node_dns'
+include_recipe 'chef-server12::_configure_node_dns' \
+  if node['chef_server12']['write_hosts']
 include_recipe 'chef-server12::_add_server_to_authorized_keys'
 
 directory '/etc/chef' do
