@@ -43,6 +43,24 @@ Install the following virtualization software:
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant](https://www.vagrantup.com/downloads.html)
 
+Attributes
+==========
+
+The attributes used by this cookbook are in the `node['chef_server12']`
+namespace:
+
+Attribute         | Description |Type | Default
+------------------|-------------|-----|--------
+api_fqdn          | Fully qualified domain name that you want to use for accessing the Web UI and API. | String | node['api_fqdn']
+backend.fqdn      | Fully qualified domain name of the Chef Server machine itself. | String | node['api_fqdn']
+backend.ipaddress | (Optional) IP address of the Chef Server machine | String | node['ipaddress']
+nodes             | List of `fqdn: ipaddress` pair values of nodes to register.  `ipaddress` is optional | Hash | Hash.new
+configuration     | Configuration values to pass down to the underlying server config file (i.e. `/etc/chef-server/chef-server.rb`). | Hash | Hash.new
+topology          | Installation cluster topology.  Possible values are `standalone`, `tiered` or `ha`. | String | 'standalone'
+version           | Chef Server version to install. This value is ignored if `package_file` is set. | String | :latest
+write_hosts       | Generate `/etc/hosts` file on nodes with values from `backend` and `nodes` attributes. | Boolean | false
+
+
 Install Methods
 ===============
 
