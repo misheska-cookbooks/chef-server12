@@ -49,17 +49,41 @@ Attributes
 The attributes used by this cookbook are in the `node['chef_server12']`
 namespace:
 
-Attribute         | Description |Type | Default
-------------------|-------------|-----|--------
-api_fqdn          | Fully qualified domain name that you want to use for accessing the Web UI and API. | String | node['api_fqdn']
-backend.fqdn      | Fully qualified domain name of the Chef Server machine itself. | String | node['api_fqdn']
-backend.ipaddress | (Optional) IP address of the Chef Server machine | String | node['ipaddress']
-nodes             | List of `fqdn: ipaddress` pair values of nodes to register.  `ipaddress` is optional | Hash | Hash.new
-configuration     | Configuration values to pass down to the underlying server config file (i.e. `/etc/chef-server/chef-server.rb`). | Hash | Hash.new
-topology          | Installation cluster topology.  Possible values are `standalone`, `tiered` or `ha`. | String | 'standalone'
-version           | Chef Server version to install. This value is ignored if `package_file` is set. | String | :latest
-write_hosts       | Generate `/etc/hosts` file on nodes with values from `backend` and `nodes` attributes. | Boolean | false
+Attribute              | Description |Type | Default
+-----------------------|-------------|-----|--------
+admin_username         | Chef admin username | String | 'chefadmin'
+admin_firstname        | Chef admin first name | String | 'Chef'
+admin_lastname         | Chef admin last name | String | 'Admin'
+admin_email            | Chef admin e-mail | String | 'chefadmin@localhost'
+admin_private_key_path | Local path where a copy of private key for the admin user should be stored | '/tmp/chefadmin.pem'
+api_fqdn               | Fully qualified domain name that you want to use for accessing the Web UI and API. | String | node['api_fqdn']
+backend.fqdn           | Fully qualified domain name of the Chef Server machine itself. | String | node['api_fqdn']
+backend.ipaddress      | (Optional) IP address of the Chef Server machine | String | node['ipaddress']
+feature                | List of premium features to install.  Possible values are `opscode-manage`, `opscode-reporting`, `chef-sync`, and `opscode-push-jobs-server`. | Boolean | false
+nodes                  | List of `fqdn: ipaddress` pair values of nodes to register.  `ipaddress` is optional | Hash | Hash.new
+configuration          | Configuration values to pass down to the underlying server config file (i.e. `/etc/chef-server/chef-server.rb`). | Hash | Hash.new
+org_name               | Organization name to be created | String | 'default'
+org_long_name          | Descriptive string for the organization | String | 'Default Organization'
+org_private_key        | Name for the organization validation key | String | #{node['chef_server12']['organization']}-validator.pem
+org_private_key_path   | Local path where a copy of organization validation key should be stored | '/tmp/default-validator.pem'
+topology               | Installation cluster topology.  Possible values are `standalone`, `tiered` or `ha`. | String | 'standalone'
+version                | Chef Server version to install. This value is ignored if `package_file` is set. | String | :latest
+write_hosts            | Generate `/etc/hosts` file on nodes with values from `backend` and `nodes` attributes. | Boolean | false
 
+Recipes
+=======
+
+Here's the recipes in the cookbook and how to use them in your environment.
+
+standalone
+----------
+Installs a Chef Server cluster using the `standalone` topology and registers
+the specified initial set of nodes.
+
+node
+----
+Initializes a node, allowing root access by the Chef Server temporarily to
+bootstrap the node with Chef.
 
 Install Methods
 ===============
