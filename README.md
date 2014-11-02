@@ -80,6 +80,11 @@ parameter.  Here is an example `solo.rb` file:
 
     cookbook_path '/var/chef-solo/cookbooks'
 
+Here's the command like you would use to use `chef-solo` to perform
+a Chef run:
+
+    $ sudo chef-solo --json-attributes standalone.json --config ./solo.rb
+
 The following script, which can be found in `bootstrap/standalone.sh`
 shows how you can dynamically generate a `solo.rb` file along with the
 full `chef-solo` command line for running this cookbook to bootstrap a
@@ -109,7 +114,7 @@ Chef Server setup:
     fi
 
     echo '==> Performing Chef run'
-    curl -L https://www.opscode.com/chef/install.sh | sudo bash
+    sudo chef-solo --json-attributes standalone.json --config ./solo.rb
 
 ## Demo with Test Kitchen
 
