@@ -65,29 +65,57 @@ unless ENV['CI']
   namespace :standalone do
     require 'kitchen'
 
-    @instances = []
+    @centos_instances = []
+    @ubuntu_instances = []
     @config = Kitchen::Config.new
-    @names = %w(node1-centos65 node2-centos65 standalone-centos65)
-    @names.each { |name| @instances << @config.instances.get(name) }
+    @centos_backend_name = 'standalone-centos65'
+    @ubuntu_backend_name = 'standalone-ubuntu1404'
+    @centos_names = %w(node1-centos65 node2-centos65 standalone-centos65)
+    @centos_names.each { |name| @centos_instances << @config.instances.get(name) }
+    @ubuntu_names = %w(node1-ubuntu1404 node2-ubuntu1404 standalone-ubuntu1404)
+    @ubuntu_names.each { |name| @ubuntu_instances << @config.instances.get(name) }
 
     desc 'login to standalone server'
     task :login do
-      @config.instances.get('standalone-centos65').login
+      platform = ARGV.last
+      case platform
+      when 'centos' then config.instances.get(@centos_backend_name).login
+      when 'ubuntu' then config.instances.get(@ubuntu_backend_name).login
+      else config.instances.get(@centos_backend_name).login
+      end
     end
 
     desc 'create standalone cluster'
     task :create do
-      @instances.each(&:create)
+      platform = ARGV.last
+      case platform
+      when 'centos' then @centos_instances.each(&:create)
+      when 'ubuntu' then @ubuntu_instances.each(&:create)
+      else @centos_instances.each(&:create)
+      end
+      #@instances.each(&:create)
     end
 
     desc 'destroy standalone cluster'
     task :destroy do
-      @instances.each(&:destroy)
+      platform = ARGV.last
+      case platform
+      when 'centos' then @centos_instances.each(&:destroy)
+      when 'ubuntu' then @ubuntu_instances.each(&:destroy)
+      else @centos_instances.each(&:create)
+      end
+      #@instances.each(&:destroy)
     end
 
     desc 'converge standalone cluster'
     task :converge do
-      @instances.each(&:converge)
+      platform = ARGV.last
+      case platform
+      when 'centos' then @centos_instances.each(&:converge)
+      when 'ubuntu' then @ubuntu_instances.each(&:converge)
+      else @centos_instances.each(&:converge)
+      end
+      #@instances.each(&:converge)
     end
   end
 end
