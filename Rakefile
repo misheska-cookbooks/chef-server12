@@ -71,9 +71,13 @@ unless ENV['CI']
     @centos_backend_name = 'standalone-centos65'
     @ubuntu_backend_name = 'standalone-ubuntu1404'
     @centos_names = %w(node1-centos65 node2-centos65 standalone-centos65)
-    @centos_names.each { |name| @centos_instances << @config.instances.get(name) }
+    @centos_names.each do |name|
+      @centos_instances << @config.instances.get(name)
+    end
     @ubuntu_names = %w(node1-ubuntu1404 node2-ubuntu1404 standalone-ubuntu1404)
-    @ubuntu_names.each { |name| @ubuntu_instances << @config.instances.get(name) }
+    @ubuntu_names.each do |name|
+      @ubuntu_instances << @config.instances.get(name)
+    end
 
     desc 'login to standalone server'
     task :login do
@@ -93,7 +97,6 @@ unless ENV['CI']
       when 'ubuntu' then @ubuntu_instances.each(&:create)
       else @centos_instances.each(&:create)
       end
-      #@instances.each(&:create)
     end
 
     desc 'destroy standalone cluster'
@@ -104,7 +107,6 @@ unless ENV['CI']
       when 'ubuntu' then @ubuntu_instances.each(&:destroy)
       else @centos_instances.each(&:create)
       end
-      #@instances.each(&:destroy)
     end
 
     desc 'converge standalone cluster'
@@ -115,7 +117,6 @@ unless ENV['CI']
       when 'ubuntu' then @ubuntu_instances.each(&:converge)
       else @centos_instances.each(&:converge)
       end
-      #@instances.each(&:converge)
     end
   end
 end
