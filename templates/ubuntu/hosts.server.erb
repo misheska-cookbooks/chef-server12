@@ -1,6 +1,6 @@
 Rockbell:chef-server12 misheska$ more templates/centos/hosts.node.erb
 127.0.0.1       localhost
-127.0.1.1 <%= @node_fqdn %> <%= @node_hostname %>
+127.0.1.1 <%= @chef_server_fqdn %> <%= @chef_server_hostname %>
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     localhost ip6-localhost ip6-loopback
