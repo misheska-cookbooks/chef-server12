@@ -80,8 +80,8 @@ unless ENV['CI']
     end
 
     desc 'login to standalone server'
-    task :login do
-      platform = ARGV.last
+    task :login, :platform do |t, args|
+      platform = args[:platform] || 'centos'
       case platform
       when 'centos' then config.instances.get(@centos_backend_name).login
       when 'ubuntu' then config.instances.get(@ubuntu_backend_name).login
@@ -90,8 +90,8 @@ unless ENV['CI']
     end
 
     desc 'create standalone cluster'
-    task :create do
-      platform = ARGV.last
+    task :create, :platform do |t, args|
+      platform = args[:platform] || 'centos'
       case platform
       when 'centos' then @centos_instances.each(&:create)
       when 'ubuntu' then @ubuntu_instances.each(&:create)
@@ -100,8 +100,8 @@ unless ENV['CI']
     end
 
     desc 'destroy standalone cluster'
-    task :destroy do
-      platform = ARGV.last
+    task :destroy, :platform do |t, args|
+      platform = args[:platform] || 'centos'
       case platform
       when 'centos' then @centos_instances.each(&:destroy)
       when 'ubuntu' then @ubuntu_instances.each(&:destroy)
@@ -110,8 +110,8 @@ unless ENV['CI']
     end
 
     desc 'converge standalone cluster'
-    task :converge do
-      platform = ARGV.last
+    task :converge, :platform do |t, args|
+      platform = args[:platform] || 'centos'
       case platform
       when 'centos' then @centos_instances.each(&:converge)
       when 'ubuntu' then @ubuntu_instances.each(&:converge)
