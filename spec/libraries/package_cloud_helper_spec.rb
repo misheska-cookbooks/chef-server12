@@ -4,9 +4,9 @@ describe PackageCloud::Helper do
   let(:url_helper) { Object.new.extend(PackageCloud::Helper)  }
 
   before(:each) do
-    @url = 'https://packagecloud.io/chef/stable/download?distro=6'\
-           '&filename=chef-server-core-12.0.0_rc.4-1.el5.x86_64.rpm'
-    @rpm_name = 'chef-server-core-12.0.0_rc.4-1.el5.x86_64.rpm'
+    @url = 'https://web-dl.packagecloud.io/chef/stable/packages/el/6'\
+            '/chef-server-core-12.0.0-1.el6.x86_64.rpm'
+    @rpm_name = 'chef-server-core-12.0.0-1.el6.x86_64.rpm'
   end
 
   describe 'local_path_from_url' do

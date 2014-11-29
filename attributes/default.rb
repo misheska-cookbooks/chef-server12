@@ -1,12 +1,12 @@
 case node['platform_family']
 when 'rhel'
   default['chef_server12']['url'] = \
-    'https://packagecloud.io/chef/stable/download?distro=6'\
-    '&filename=chef-server-core-12.0.0_rc.6-1.el6.x86_64.rpm'
+    'https://web-dl.packagecloud.io/chef/stable/packages/el/6'\
+    '/chef-server-core-12.0.0-1.el6.x86_64.rpm'
 when 'debian'
   default['chef_server12']['url'] = \
-    'https://packagecloud.io/chef/stable/download?distro=trusty'\
-    '&filename=chef-server-core_12.0.0-rc.6-1_amd64.deb'
+    'https://web-dl.packagecloud.io/chef/stable/packages/ubuntu/trusty'\
+    '/chef-server-core_12.0.0-1_amd64.deb'
 end
 
 # Premium features

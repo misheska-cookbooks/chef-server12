@@ -7,9 +7,7 @@ module PackageCloud
     end
 
     def package_name_from_url(url)
-      uri_parsed = URI.parse(url)
-      cgi_parsed = CGI.parse(uri_parsed.query)
-      cgi_parsed['filename'].first
+      ::File.basename(url)
     end
   end
 end
