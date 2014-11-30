@@ -1,0 +1,24 @@
+# This file was created by Chef - manual changes may be overwritten
+
+topology "tier"
+
+server "<%= node['chef_server12']['backend']['fqdn'] %>",
+  :ipaddress => "<%= node['chef_server12']['backend']['ipaddress'] %>",
+  :role => "backend",
+  :bootstrap => true
+
+backend_vip "<%= node['chef_server12']['backend']['fqdn'] %>",
+  :ipaddress => "<%= node['chef_server12']['backend']['ipaddress'] %>"
+
+<% node['chef_server12']['frontends'].each do |fqdn, ipaddress| -%>
+server "<%= fqdn %>",
+  :ipaddress => "<%= ipaddress %>",
+  :role => "frontend"
+
+<% end -%>
+api_fqdn "<%= node['chef_server12']['api_fqdn'] -%>"
+<% if node['chef_server12']['analytics'] -%>
+dark_launch['actions'] = true
+rabbitmq['vip'] = "<%= @analytics_ipaddress %>"
+rabbitmq['node_ip_address'] = '0.0.0.0'
+<% end -%>

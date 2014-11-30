@@ -1,0 +1,7 @@
+127.0.0.1   <%= @analytics_fqdn %> <%= @analytics_hostname %> localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+<%= @chef_server_ipaddress %> <%= @chef_server_fqdn %>
+<% if node['chef_server12']['analytics'] -%>
+<%= @analytics_ipaddress %> <%= @analytics_fqdn %>
+<% end -%>

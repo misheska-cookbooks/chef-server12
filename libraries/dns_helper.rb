@@ -6,3 +6,6 @@ module DNS
     end
   end
 end
+
+# include helper methods
+::Chef::Recipe.send(:include, DNS::Helper)

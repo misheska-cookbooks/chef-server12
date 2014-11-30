@@ -7,3 +7,6 @@
 <%= ipaddress %> <%= fqdn %>
 <% end -%>
 <% end -%>
+<% if node['chef_server12']['analytics'] -%>
+<%= @analytics_ipaddress %> <%= @analytics_fqdn %>
+<% end -%>

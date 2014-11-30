@@ -1,6 +1,5 @@
-Rockbell:chef-server12 misheska$ more templates/centos/hosts.node.erb
 127.0.0.1       localhost
-127.0.1.1 <%= @chef_server_fqdn %> <%= @chef_server_hostname %>
+127.0.1.1 <%= @analytics_fqdn %> <%= @analytics_hostname %>
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     localhost ip6-localhost ip6-loopback
@@ -8,11 +7,6 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 
 <%= @chef_server_ipaddress %> <%= @chef_server_fqdn %>
-<% if node['chef_server12'].attribute?('nodes') -%>
-<% node['chef_server12']['nodes'].each do |fqdn, ipaddress| -%>
-<%= ipaddress %> <%= fqdn %>
-<% end -%>
-<% end -%>
 <% if node['chef_server12']['analytics'] -%>
 <%= @analytics_ipaddress %> <%= @analytics_fqdn %>
 <% end -%>

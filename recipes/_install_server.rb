@@ -1,3 +1,17 @@
+chef_server_ipaddress = node['chef_server12']['backend']['ipaddress']
+
+directory '/etc/opscode'
+
+template '/etc/opscode/chef-server.rb' do
+  source 'chef-server.rb.erb'
+  owner 'root'
+  group 'root'
+  mode 0644
+  variables(
+    chef_server_ipaddress: chef_server_ipaddress
+  )
+end
+
 package_url = node['chef_server12']['url']
 package_name = package_name_from_url(package_url)
 package_local_path = local_path_from_url(package_url)

@@ -11,3 +11,6 @@ module PackageCloud
     end
   end
 end
+
+# include helper methods
+::Chef::Recipe.send(:include, PackageCloud::Helper)

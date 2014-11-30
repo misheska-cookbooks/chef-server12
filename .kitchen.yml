@@ -2,6 +2,7 @@
 chef_server_ip = ENV['CHEF_SERVER_IP'] ? ENV['CHEF_SERVER_IP'] : '192.168.33.34'
 chef_node1_ip = ENV['CHEF_NODE1_IP'] ? ENV['CHEF_NODE1_IP'] : '192.168.33.35'
 chef_node2_ip = ENV['CHEF_NODE2_IP'] ? ENV['CHEF_NODE2_IP'] : '192.168.33.36'
+chef_analytics_ip = ENV['CHEF_ANALYTICS_IP'] ? ENV['CHEF_ANALYTICS_IP'] : '192.168.33.37'
 %>
 ---
 driver:
@@ -23,6 +24,8 @@ platforms:
         backend:
           fqdn: 'standalone.vagrantup.com'
           ipaddress: "<%= chef_server_ip %>"
+          analytics_fqdn: 'analytics.vagrantup.com'
+          analytics_ipaddress: "<%= chef_analytics_ip %>"
         nodes:
           node1.vagrantup.com: "<%= chef_node1_ip %>"
           node2.vagrantup.com: "<%= chef_node2_ip %>"
@@ -39,6 +42,8 @@ platforms:
         backend:
           fqdn: 'standalone.vagrantup.com'
           ipaddress: "<%= chef_server_ip %>"
+          analytics_fqdn: 'analytics.vagrantup.com'
+          analytics_ipaddress: "<%= chef_analytics_ip %>"
         nodes:
           node1.vagrantup.com: "<%= chef_node1_ip %>"
           node2.vagrantup.com: "<%= chef_node2_ip %>"
@@ -53,6 +58,17 @@ suites:
         memory: 1536
     run_list:
       - recipe[chef-server12::standalone]
+    attributes:
+
+  - name: analytics
+    driver:
+      vm_hostname: analytics.vagrantup.com
+      network:
+      - ["private_network", {ip: "<%= chef_analytics_ip %>"}]
+      customize:
+        memory: 1536
+    run_list:
+      - recipe[chef-server12::analytics]
     attributes:
 
   - name: node1

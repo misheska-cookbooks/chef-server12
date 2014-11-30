@@ -14,6 +14,26 @@ On Mac OS X and Linux, configure the PATH and GEM environment variables with:
 
 All cookbook-related development activities are Rake tasks:
 
+    rake complete                       # Run _all_ the tests
+    rake foodcritic                     # Lint Chef cookbooks
+    rake kitchen:all                    # Run all test instances
+    rake kitchen:analytics-centos65     # Run analytics-centos65 test instance
+    rake kitchen:analytics-ubuntu1404   # Run analytics-ubuntu1404 test instance
+    rake kitchen:node1-centos65         # Run node1-centos65 test instance
+    rake kitchen:node1-ubuntu1404       # Run node1-ubuntu1404 test instance
+    rake kitchen:node2-centos65         # Run node2-centos65 test instance
+    rake kitchen:node2-ubuntu1404       # Run node2-ubuntu1404 test instance
+    rake kitchen:standalone-centos65    # Run standalone-centos65 test instance
+    rake kitchen:standalone-ubuntu1404  # Run standalone-ubuntu1404 test instance
+    rake rubocop                        # Run RuboCop
+    rake rubocop:auto_correct           # Auto-correct RuboCop offenses
+    rake spec                           # Run RSpec code examples
+    rake standalone:converge[platform]  # converge standalone cluster
+    rake standalone:create[platform]    # create standalone cluster
+    rake standalone:destroy[platform]   # destroy standalone cluster
+    rake standalone:login[platform]     # login to standalone server
+    rake test:quick                     # Run all the quick tests
+
 To spin up your very own test Chef Server cluster:
 
     $ rake standalone:converge
@@ -26,9 +46,10 @@ The IP address is configurable with the `CHEF_SERVER_IP` environment variable.
 
 ## Prerequisites
 
-2GB free memory for the instances:
+3.5GB free memory for the instances:
 
 * Chef Server - 1.5GB
+* Analytics Server - 1.5GB
 * Each node managed by Chef - 512MB
 
 Clone this repository:
@@ -56,7 +77,10 @@ admin_firstname        | Chef admin first name | String | 'Chef'
 admin_lastname         | Chef admin last name | String | 'Admin'
 admin_email            | Chef admin e-mail | String | 'chefadmin@localhost'
 admin_private_key_path | Local path where a copy of private key for the admin user should be stored | '/tmp/chefadmin.pem'
+analytics              | Install Chef Analytics | Boolean | true
 api_fqdn               | Fully qualified domain name that you want to use for accessing the Web UI and API. | String | node['api_fqdn']
+backend.analytics_fqdn | Fully qualified domain name of the  Chef Analytics server machine | String | node['analytics_fqdn']
+backend.analytics_ipaddress | (Optional) IP address of the Chef Analytics server machine | String | node['analytics_ipaddress']
 backend.fqdn           | Fully qualified domain name of the Chef Server machine itself. | String | node['api_fqdn']
 backend.ipaddress      | (Optional) IP address of the Chef Server machine | String | node['ipaddress']
 feature                | List of premium features to install.  Possible values are `opscode-manage`, `opscode-reporting`, `chef-sync`, and `opscode-push-jobs-server`. | Boolean | false
