@@ -14,6 +14,7 @@ On Mac OS X and Linux, configure the PATH and GEM environment variables with:
 
 All cookbook-related development activities are Rake tasks:
 
+    rake bootstrap                      # Bootstrap with chef-solo
     rake complete                       # Run _all_ the tests
     rake foodcritic                     # Lint Chef cookbooks
     rake kitchen:all                    # Run all test instances
@@ -151,36 +152,9 @@ a Chef run:
 
     $ sudo chef-solo --json-attributes standalone.json --config ./solo.rb
 
-The following script, which can be found in `bootstrap/standalone.sh`
-shows how you can dynamically generate a `solo.rb` file along with the
-full `chef-solo` command line for running this cookbook to bootstrap a
-Chef Server setup:
+The following Rake task can be used to run `chef-solo`:
 
-    #!/bin/bash -eux
-
-    abspath()
-    {
-      cd "$(dirname "$1")"
-      printf "%s/%s\n" "$(pwd)" "$(basename "$1")"
-    }
-
-    generate_solo_rb()
-    {
-      cat > solo.rb <<_EOF_
-    cookbook_path "$(abspath '../..')"
-    _EOF_
-    }
-
-    echo '==> Installing chef-solo'
-    curl -L https://www.opscode.com/chef/install.sh | sudo bash
-
-    if [ ! -f "solo.rb" ] ; then
-      echo '==> Generating solo.rb'
-      generate_solo_rb
-    fi
-
-    echo '==> Performing Chef run'
-    sudo chef-solo --json-attributes standalone.json --config ./solo.rb
+    $ rake bootstrap
 
 ## Demo with Test Kitchen
 

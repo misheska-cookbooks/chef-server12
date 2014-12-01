@@ -46,6 +46,13 @@ namespace :test do
   end
 end
 
+desc 'Bootstrap with chef-solo'
+task :bootstrap do
+  sh 'rm -rf cookbooks && berks vendor cookbooks'
+  sh 'sudo chef-solo --json-attributes bootstrap/standalone.json'\
+     '  --config bootstrap/solo.rb'
+end
+
 unless ENV['CI']
   begin
     require 'kitchen/rake_tasks'

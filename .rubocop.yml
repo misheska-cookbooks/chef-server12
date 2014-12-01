@@ -3,6 +3,7 @@ AllCops:
     - bin/**/*
     - script/**/*
     - vendor/**/*
+    - cookbooks/**/*
 
 SingleSpaceBeforeFirstArg:
   Enabled: false
